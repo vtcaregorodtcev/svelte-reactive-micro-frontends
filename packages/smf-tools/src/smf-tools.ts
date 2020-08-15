@@ -1,5 +1,6 @@
 import { MicroFrontendManifest } from './typings';
 
+export * from './typings';
 export * from './microfrontends';
 
 export const getStringEntryPoint = (microfrontend: MicroFrontendManifest): string => {
