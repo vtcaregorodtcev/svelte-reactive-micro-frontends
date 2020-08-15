@@ -1,0 +1,5 @@
+export const EVENTS = {
+  GALLERY: {
+    CARD_SELECTED: "GALLERY:CARD_SELECTED"
+  }
+}
