@@ -1,3 +1,9 @@
+declare global {
+  interface Window {
+    Bus: EventBus
+  }
+}
+
 export type MicroFrontendManifestConfig = Record<string, MicroFrontendManifest>
 
 export type MicroFrontendManifest = {
@@ -17,15 +23,15 @@ export type MOCK_Item = {
   Picture: string;
 }
 
-export type Handler = (p?: Object) => void
-export type LoggerHandler = (event: string, p?: Object) => void
-export type PredicateLoggerHandler = (event: string, payload?: Object) => boolean
+export type Handler<T> = (p?: T) => void
+export type LoggerHandler<T> = (event: string, p?: T) => void
+export type PredicateLoggerHandler<T> = (event: string, payload?: T) => boolean
 
 export interface EventBus {
-  logger?: LoggerHandler
-  handlers: Record<string, Handler[]>
+  logger?: LoggerHandler<any>
+  handlers: Record<string, Handler<any>[]>
 
-  on(event: string, handler: Handler): void;
-  fire(event: string, payload?: Object): void;
-  log?(handler: LoggerHandler, predicate?: PredicateLoggerHandler): void;
+  on<T>(event: string, handler: Handler<T>): void;
+  fire<T>(event: string, payload?: T): void;
+  log?<T>(handler: LoggerHandler<T>, predicate?: PredicateLoggerHandler<T>): void;
 }

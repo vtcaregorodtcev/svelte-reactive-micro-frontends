@@ -23,7 +23,7 @@ export function loadMicroFrontend(microfrontend: MicroFrontendManifest): void {
   document.head.appendChild(script);
 }
 
-const noop = () => { }
+export const noop = () => { }
 
 
 export class Bus implements EventBus {
@@ -32,10 +32,10 @@ export class Bus implements EventBus {
     this.logger = noop
   }
 
-  logger: LoggerHandler
-  handlers: Record<string, Handler[]>;
+  logger: LoggerHandler<any>
+  handlers: Record<string, Handler<any>[]>;
 
-  on(event: string, handler: Handler): void {
+  on<T>(event: string, handler: Handler<T>): void {
     if (this.handlers[event]) {
       this.handlers[event].push(handler);
     } else {
@@ -43,19 +43,27 @@ export class Bus implements EventBus {
     }
   }
 
-  fire(event: string, payload?: Object): void {
+  fire<T>(event: string, payload?: T): void {
     const handlers = this.handlers[event] || [];
 
     this.logger(event, payload);
 
-    handlers.map(h => h(payload));
+    handlers.map(h => (h as Handler<T>)(payload));
   }
 
-  log(handler: LoggerHandler, predicate?: PredicateLoggerHandler): void {
-    this.logger = (e: string, p?: Object) => predicate
+  log<T>(handler: LoggerHandler<T>, predicate?: PredicateLoggerHandler<T>): void {
+    this.logger = (e: string, p?: T) => predicate
       ? predicate(e, p)
         ? handler(e, p)
         : noop()
       : handler(e, p)
   }
 }
+
+export const connectToEventBus = () => {
+  window.Bus = window.Bus || new Bus();
+}
+
+export const getEventBus = () => window.Bus;
+
+export const attachLoggerToEventBus = (handler: LoggerHandler<any>, predicate?: PredicateLoggerHandler<any>) => window.Bus && window.Bus.log && window.Bus.log(handler, predicate);

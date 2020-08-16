@@ -1,7 +1,7 @@
 import App from './App.svelte';
-import { Bus } from 'smf-tools';
+import { connectToEventBus } from 'smf-tools';
 
-window.Bus = window.Bus || new Bus();
+connectToEventBus()
 
 const app = new App({
 	target: document.body

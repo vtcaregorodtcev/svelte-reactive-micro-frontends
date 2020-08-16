@@ -1,11 +1,9 @@
 <script lang="ts">
   import Card, { Content, Media, MediaContent } from "@smui/card";
   import type { MOCK_Item } from "smf-tools";
-  import { EVENTS } from "smf-tools";
+  import { onGalleryCardSelected } from "smf-tools";
 
   export let restaurantsPromise: Promise<MOCK_Item[]> = Promise.resolve([]);
-
-  const askToGoToCard = () => window.Bus.fire(EVENTS.GALLERY.CARD_SELECTED);
 </script>
 
 <style>
@@ -35,7 +33,7 @@
           <Media class="card-media-16x9" aspectRatio="16x9">
             <MediaContent>
               <img
-                on:click={askToGoToCard}
+                on:click={() => onGalleryCardSelected.fire(r)}
                 class="card-image"
                 src={r.Picture}
                 alt="" />

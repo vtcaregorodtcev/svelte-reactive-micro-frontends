@@ -3,17 +3,15 @@
     getStringEntryPoint,
     loadMicroFrontend,
     MicroFrontends,
-    EVENTS,
+    onGalleryCardSelected,
   } from "smf-tools";
-
   import TopAppBar from "@smui/top-app-bar";
   import { onMount } from "svelte";
 
   const galleryMicroFront = MicroFrontends["smf-gallery"][process.env.NODE_ENV];
 
   onMount(async () => loadMicroFrontend(galleryMicroFront));
-
-  window.Bus.on(EVENTS.GALLERY.CARD_SELECTED, () => alert("it`s working"));
+  onGalleryCardSelected.then((i) => console.log(i.Name));
 </script>
 
 <style>
