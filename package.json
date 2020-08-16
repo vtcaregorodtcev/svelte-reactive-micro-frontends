@@ -3,5 +3,11 @@
   "private": true,
   "devDependencies": {
     "lerna": "^3.18.3"
+  },
+  "scripts": {
+    "serveCheckout": "cd ./packages/smf-checkout && npm run build && npx http-server ./public --port=9000",
+    "serveGallery": "cd ./packages/smf-gallery && npm run build && npx http-server ./public --port=5555",
+    "serveRestaurant": "cd ./packages/smf-restaurant && npm run build && npx http-server ./public --port=7000",
+    "serveHost": "cd ./packages/host && npm run dev"
   }
 }

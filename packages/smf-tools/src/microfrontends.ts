@@ -28,5 +28,19 @@ export const MicroFrontends: Record<string, MicroFrontendManifestConfig> = {
       "cssassets": "http://127.0.0.1:7000/build/bundle.css",
       "jsassets": "http://127.0.0.1:7000/build/bundle.js"
     }
+  },
+  "smf-checkout": {
+    "production": {
+      "name": "Restaurant Checkout",
+      "target": "smf-checkout",
+      "cssassets": "-",
+      "jsassets": "-"
+    },
+    "development": {
+      "name": "Restaurant Checkout",
+      "target": "smf-checkout",
+      "cssassets": "http://127.0.0.1:9000/build/bundle.css",
+      "jsassets": "http://127.0.0.1:9000/build/bundle.js"
+    }
   }
 }

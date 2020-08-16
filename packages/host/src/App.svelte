@@ -10,6 +10,8 @@
   const galleryMicroFront = MicroFrontends["smf-gallery"][process.env.NODE_ENV];
   const restaurantMicroFront =
     MicroFrontends["smf-restaurant"][process.env.NODE_ENV];
+  const checkoutMicroFront =
+    MicroFrontends["smf-checkout"][process.env.NODE_ENV];
 
   onGalleryCardSelected.then((i) => navigate(`/restaurants?id=${i.id}`));
 </script>
@@ -30,6 +32,12 @@
     font-size: 18px;
   }
 
+  .header-line {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
   .gallery {
     margin-top: 20px;
   }
@@ -42,7 +50,12 @@
       prominent={true}
       color="secondary"
       variant="static">
-      IndexПища
+      <div class="header-line">
+        <span>IndexПища</span>
+        <span>
+          {@html loadMicroFrontend(checkoutMicroFront)}
+        </span>
+      </div>
     </TopAppBar>
     <div class="container">
       <Route path="/">
