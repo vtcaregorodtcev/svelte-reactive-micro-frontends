@@ -8,19 +8,32 @@ export const getStringEntryPoint = (microfrontend: MicroFrontendManifest): strin
   return `<div id=${microfrontend.target}></div>`
 }
 
-export function loadMicroFrontend(microfrontend: MicroFrontendManifest): void {
-  const link = document.createElement("link");
+export function loadMicroFrontend(microfrontend: MicroFrontendManifest): string {
+  const appendData = () => {
+    const link = document.createElement("link");
 
-  link.rel = "stylesheet";
-  link.type = "text/css";
-  link.href = microfrontend.cssassets;
+    link.rel = "stylesheet";
+    link.type = "text/css";
+    link.href = microfrontend.cssassets;
 
-  const script = document.createElement("script");
+    const script = document.createElement("script");
 
-  script.setAttribute("src", microfrontend.jsassets);
+    script.setAttribute("src", microfrontend.jsassets);
 
-  document.head.appendChild(link);
-  document.head.appendChild(script);
+    if (!document.head.querySelector(`link[href='${link.href}']`)) {
+      document.head.appendChild(link);
+    }
+
+    const alreadyExists = document.head.querySelector(`script[src='${script.src}']`)
+
+    if (alreadyExists) alreadyExists.remove();
+
+    document.head.appendChild(script);
+  }
+
+  setTimeout(appendData);
+
+  return getStringEntryPoint(microfrontend)
 }
 
 export const noop = () => { }

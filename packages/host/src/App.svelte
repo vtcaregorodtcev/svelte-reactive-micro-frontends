@@ -1,17 +1,17 @@
 <script lang="ts">
   import {
-    getStringEntryPoint,
     loadMicroFrontend,
     MicroFrontends,
     onGalleryCardSelected,
   } from "smf-tools";
   import TopAppBar from "@smui/top-app-bar";
-  import { onMount } from "svelte";
+  import { Router, navigate, Route } from "svelte-routing";
 
   const galleryMicroFront = MicroFrontends["smf-gallery"][process.env.NODE_ENV];
+  const restaurantMicroFront =
+    MicroFrontends["smf-restaurant"][process.env.NODE_ENV];
 
-  onMount(async () => loadMicroFrontend(galleryMicroFront));
-  onGalleryCardSelected.then((i) => console.log(i.Name));
+  onGalleryCardSelected.then((i) => navigate(`/restaurants?id=${i.id}`));
 </script>
 
 <style>
@@ -36,14 +36,23 @@
 </style>
 
 <main>
-  <TopAppBar
-    class="container app-header"
-    prominent={true}
-    color="secondary"
-    variant="static">
-    IndexПища
-  </TopAppBar>
-  <div class="container gallery">
-    {@html getStringEntryPoint(galleryMicroFront)}
-  </div>
+  <Router>
+    <TopAppBar
+      class="container app-header"
+      prominent={true}
+      color="secondary"
+      variant="static">
+      IndexПища
+    </TopAppBar>
+    <div class="container">
+      <Route path="/">
+        <div class="gallery">
+          {@html loadMicroFrontend(galleryMicroFront)}
+        </div>
+      </Route>
+      <Route path="/restaurants">
+        {@html loadMicroFrontend(restaurantMicroFront)}
+      </Route>
+    </div>
+  </Router>
 </main>

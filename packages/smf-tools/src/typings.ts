@@ -23,6 +23,8 @@ export type MOCK_Item = {
   Picture: string;
 }
 
+export type MOCK_Item_Restaurant = { id: number, Name: string, Cost: string, Picture: string }
+
 export type Handler<T> = (p?: T) => void
 export type LoggerHandler<T> = (event: string, p?: T) => void
 export type PredicateLoggerHandler<T> = (event: string, payload?: T) => boolean

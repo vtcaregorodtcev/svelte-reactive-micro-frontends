@@ -1,9 +1,12 @@
-import { Handler, MOCK_Item } from "./typings"
+import { Handler, MOCK_Item, MOCK_Item_Restaurant } from "./typings"
 import { getEventBus } from "./smf-tools"
 
 export const EVENTS = {
   GALLERY: {
     CARD_SELECTED: "GALLERY:CARD_SELECTED"
+  },
+  RESTAURANT: {
+    DISH_SELECTED: "RESTAURANT:DISH_SELECTED"
   }
 }
 
@@ -22,3 +25,4 @@ export const boilerplate = <T>(e: string) => ({
 })
 
 export const onGalleryCardSelected = boilerplate<MOCK_Item>(EVENTS.GALLERY.CARD_SELECTED)
+export const onRestaurantCardSelected = boilerplate<MOCK_Item_Restaurant>(EVENTS.RESTAURANT.DISH_SELECTED)
